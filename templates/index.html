@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        h1{
+            text-align: center;
+        }
+        body{
+            background-image: linear-gradient(to right,darkblue,blue,darkblue);
+        }
+        ol{
+            padding: 150px;
+            margin-left: 20%;
+            margin-right: 20%;
+            margin-top: 7%;
+            margin-bottom: 5%;
+            background-image: linear-gradient(to left,grey,white,grey);
+
+        }
+        form{
+            padding: 50px;
+            margin-left: 20%;
+            margin-right: 20%;
+            margin-bottom: 20%;
+            background-image: linear-gradient(to left,purple,white);
+        }
+    </style>
+  </head>
+  <body>
+    <h1>To-do List &#128540;</h1>
+    <ol>
+      {% for todo in todos %}
+        <li>
+          <input type="checkbox" name="done" {% if todo['done'] %}checked{% endif %} onchange="this.form.submit()">
+          <span {% if todo['done'] %}style="text-decoration: line-through"{% endif %}>{{ todo['task'] }}</span>
+          <a href="{{ url_for('edit', index=loop.index0) }}" style="text-decoration:none;"><button>edit ✎</button></a>
+          <a href="{{ url_for('delete', index=loop.index0) }}" style="text-decoration:none;"><button style="background-color:red">delete <i class="fa fa-trash-o" style="font-size:17px"></i></button></a>
+        </li>
+      {% endfor %}
+    </ol>
+    <form action="{{ url_for('add') }}" method="post">
+      <input type="text" name="todo">
+      <button type="submit" style="background-colour:yellow">+</button>
+    </form>
+  </body>
+</html>
